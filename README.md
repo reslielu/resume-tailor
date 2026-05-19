@@ -1,8 +1,13 @@
 # Resume Tailor
 
-AI-powered resume customisation for every job application. Paste your resume and a job description — Claude rewrites your bullet points to match the role, mirrors the JD's keywords, and exports a clean PDF.
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![Gemini API](https://img.shields.io/badge/AI-Gemini_2.5_Flash-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-Built with **Next.js 14** · **Claude API (claude-sonnet-4)** · **TypeScript** · **Tailwind CSS**
+AI-powered resume customisation for every job application. Paste your resume and a job description — AI rewrites your bullet points to match the role, mirrors the JD's keywords, and exports a clean PDF.
+
+Built with **Next.js 14** · **Gemini API (gemini-2.5-flash)** · **TypeScript** · **Tailwind CSS**
 
 ---
 
@@ -10,10 +15,12 @@ Built with **Next.js 14** · **Claude API (claude-sonnet-4)** · **TypeScript** 
 
 - Paste resume text or upload a PDF
 - Paste any job description
-- Claude rewrites bullet points to match the role (never invents experience)
+- AI rewrites bullet points to match the role (never invents experience)
 - Keyword match badges show which JD terms made it in
 - One-click PDF download
 - Copy-to-clipboard for pasting into any editor
+
+> **Privacy Note:** Resumes and job descriptions are processed strictly in-memory during the API request and are not stored in any database.
 
 ---
 
@@ -36,12 +43,12 @@ cd resume-tailor
 npm install
 ```
 
-### 3. Get your Anthropic API key
+### 3. Get your Google Gemini API key
 
-1. Go to [console.anthropic.com](https://console.anthropic.com)
-2. Sign up or log in
-3. Navigate to **API Keys** → **Create Key**
-4. Copy the key — you won't see it again
+1. Go to [Google AI Studio](https://aistudio.google.com)
+2. Sign in with your Google account
+3. Click on **Get API key** in the left navigation menu, then click **Create API key**
+4. Copy the key — you will need to add this to your environment file
 
 ### 4. Set up your environment file
 
@@ -52,7 +59,7 @@ cp .env.local.example .env.local
 Open `.env.local` and replace `your_api_key_here` with your actual key:
 
 ```
-ANTHROPIC_API_KEY=sk-ant-...
+GOOGLE_GEMINI_API_KEY=AIza...
 ```
 
 > **Important:** `.env.local` is in `.gitignore` — it will never be committed. Never paste your API key in code or push it to GitHub.
@@ -67,7 +74,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## How to test it locally
+## Usage
 
 ### Quick smoke test (no real resume needed)
 
@@ -131,7 +138,7 @@ Expected response:
 
 | Error | Fix |
 |-------|-----|
-| `ANTHROPIC_API_KEY is not set` | Make sure `.env.local` exists with your key, then restart the dev server |
+| `GOOGLE_GEMINI_API_KEY is not set` | Make sure `.env.local` exists with your key, then restart the dev server |
 | `Module not found: pdf-parse` | Run `npm install` again |
 | PDF upload says "Upload failed" | Some scanned PDFs have no text layer — paste the text manually instead |
 | Blank page at localhost:3000 | Check your terminal for a build error; usually a TypeScript issue |
@@ -147,7 +154,7 @@ resume-tailor/
 │   ├── layout.tsx                ← Root layout
 │   ├── globals.css               ← Tailwind base styles
 │   └── api/
-│       ├── tailor/route.ts       ← Claude API call
+│       ├── tailor/route.ts       ← API call
 │       └── extract-pdf/route.ts  ← PDF text extraction
 ├── lib/
 │   ├── pdf.ts                    ← PDF download utility
@@ -165,7 +172,7 @@ npm i -g vercel
 vercel
 ```
 
-When prompted, add `ANTHROPIC_API_KEY` as an environment variable in the Vercel dashboard under **Settings → Environment Variables**.
+When prompted, add `GOOGLE_GEMINI_API_KEY` as an environment variable in the Vercel dashboard under **Settings → Environment Variables**.
 
 ---
 
